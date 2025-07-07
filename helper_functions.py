@@ -8,6 +8,11 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import seaborn as sns
 def compute_disparity(frame):
+    '''
+    function to compute the relative distance in one frame image . to perform monocular depth estimation 
+    it takes input frame 
+    and return a numpy array 
+    '''
     # download the MIdas Model
     midas = torch.hub.load('intel-isl/MiDaS', "DPT_Large")
     midas.to('cpu')
@@ -28,6 +33,13 @@ def compute_disparity(frame):
         return output
 
 def detection_Frame(Frame,Model):
+    '''
+    function to compute the detection using a Yolo model for a frame 
+    it takes input : Frame and Yolo Model 
+    it returns 
+    two lists othe first has tuple consists of list of detections in this frame . every detection consists of 
+    bounding boxes xyxy ,conf and classes . The second list bounding boxes is xywh where w and h are widthes and heights . 
+    '''
     result =Model.predict(Frame,classes=[8])
     for r in result :
         detections=[]
@@ -44,6 +56,10 @@ def detection_Frame(Frame,Model):
     return detections,detection_xyxy
 
 def track(detections, frame):
+    '''
+    the inplementation of deep sort algorithm in python 
+    it takes list of detection and frame and returns tracking ids and bounding boxes 
+    '''
     object_tracker = DeepSort(
         max_age=50,
         n_init=2,
@@ -70,6 +86,9 @@ def track(detections, frame):
     return tracking_ids, boxes
 
 def find_distance_lon_lat(lat_North,lon_North,lat_RP,lon_RP):
+    '''
+    compute the harversine distance between two coordinates 
+    '''
 
     camera1_coords = (lat_North, lon_North)  # North Camera coordinate(latitude, longitude)
     RP_coords = (lat_RP, lon_RP)  # South Camera coordinate (latitude, longitude)
@@ -79,6 +98,9 @@ def find_distance_lon_lat(lat_North,lon_North,lat_RP,lon_RP):
 
 
 def masked_depth_map(depth_map,detections):
+    '''
+    returning an image with only detected objects in depth scale 
+    '''
     height, width = depth_map.shape
     masked_image = np.zeros((height, width), dtype=np.uint8)
     for detection in detections:
@@ -93,6 +115,9 @@ def masked_depth_map(depth_map,detections):
 
 
 def distance_for_detected_object_in_a_frame (detection_xyxy,depth_map,frame):
+    '''
+    compute the distances of objects from depth map generated using MIDAS 
+    '''
     list_distances=[]
     for detection in detection_xyxy:
         xmin, ymin, xmax, ymax = detection[0]
@@ -135,6 +160,9 @@ def distance_for_detected_object_in_a_frame (detection_xyxy,depth_map,frame):
     return list_distances
 
 def Text_on_Frame(tracking_ids,boxes,frame):
+    '''
+    add text on the detected object for the tracking purpose 
+    '''
     for tracking_id, bounding_box in zip(tracking_ids, boxes):
         cv2.rectangle(frame, (int(bounding_box[0]), int(bounding_box[1])), (int(
             bounding_box[2]), int(bounding_box[3])), (0, 0, 255), 2)
