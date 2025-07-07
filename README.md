@@ -11,4 +11,6 @@
 - in the code there is some commented line of codes if you want to generate specific things indicated in the code for instance in the helper files in the function distance_for_detected_object_in_a_frame
 there are many commented lines to show images and the line of code that call that function in task 2 but I don't recommend calling it while the while loop is running . the model is heavy enough already . it might not complete even with using GPU .
 - Helper functions contain all the helper functions it has to be located in the same file with the tasks files .
+- to download the json files for depth estimate in this zip file
+  https://drive.google.com/file/d/14-k9hCFpOmkdgY8JeN2EQyCEVbOThVls/view?usp=sharing
 - if anything is unclear let me know 
