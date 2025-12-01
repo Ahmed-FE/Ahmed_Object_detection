@@ -1,4 +1,4 @@
-# CMMI_Task
+# object_detection
 - Run task 1 to generate the json files required in task 1
 - run task 2 to generate the josn files required for task 2
 - run task three to generate the videos required in task 3
