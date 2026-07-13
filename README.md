@@ -1,4 +1,5 @@
 # object_detection
+- Read report_tasks.docx for complete task description and reports
 - Run task 1 to generate the json files required in task 1
 - run task 2 to generate the josn files required for task 2
 - run task three to generate the videos required in task 3
@@ -11,4 +12,3 @@
 - in the code there is some commented line of codes if you want to generate specific things indicated in the code for instance in the helper files in the function distance_for_detected_object_in_a_frame
 there are many commented lines to show images and the line of code that call that function in task 2 but I don't recommend calling it while the while loop is running . the model is heavy enough already . it might not complete even with using GPU .
 - Helper functions contain all the helper functions it has to be located in the same file with the tasks files .
-
